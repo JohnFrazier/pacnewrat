@@ -1,40 +1,17 @@
 =head1 NAME
 
 
-pacrat - package config manager using libalpm
+pacnewrat - pacnew locator using libalpm
 
 =head1 SYNOPSIS
 
-Usage: I<pacrat> E<lt>operationE<gt> [ options ]
+Usage: I<pacnewrat>
 
 =head1 DESCRIPTION
 
-pacrat is a simple tool to manage configuration files known to libalpm.  It
-make local copies of modified system configuration files and pushes locally
-stored copies back onto the system. When combined with a source control system
-this tool allows for efficient management, storage, and visioning of system
-wide configuration files.
+pacnewrat is a simple tool to find configuration files known to libalpm. 
 
 =head1 OPERATIONS
-
-=over 4
-
-=item B<-l, --list>
-
-List all modified configuration files libalpm tracks.
-
-=back
-
-=head1 OPTIONS
-
-=over 4
-
-=item B<-c>, B<--color>[B<=>I<WHEN>]
-
-Use colored output. WHEN is `always' or `auto'. Color will be disabled in a
-pipe unless WHEN is set to always.
-
-=back
 
 =head1 AUTHOR
 

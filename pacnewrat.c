@@ -28,10 +28,6 @@ enum {
 	CONF_PACORIG = (1 << 2)
 };
 
-enum {
-	OP_DEBUG = 1000
-};
-
 typedef struct __file_t {
 	char *path;
 	char *hash;
@@ -43,14 +39,6 @@ typedef struct __backup_t {
 	file_t local;
 	const char *hash;
 } backup_t;
-
-typedef struct __strings_t {
-	const char *error;
-	const char *warn;
-	const char *info;
-	const char *pkg;
-	const char *nc;
-} strings_t;
 
 static int check_pacfiles(const char *);
 static void alpm_find_backups(alpm_pkg_t *);

@@ -102,10 +102,10 @@ version() {
 cmd() {
 	if [[ -n $locate ]]; then
 		$locate -0 -e -b \*.pacnew \*.pacorig \*.pacsave
-	elif [[ -n $find ]]; then
-		$find $diffsearchpath \( -name \*.pacnew -o -name \*.pacorig -o -name \*.pacsave \) -print0
-	else
+	elif [[ -n $pacnewrat ]]; then
 		$pacnewrat -p
+	else
+		find $diffsearchpath \( -name \*.pacnew -o -name \*.pacorig -o -name \*.pacsave \) -print0
 	fi
 }
 
@@ -114,7 +114,7 @@ if [ $# -gt 0 ]; then
 		-l|--locate)
 		locate=$(type -P locate);;
 		-f|--find)
-		find=$(type -P find);;
+		unset pacnewrat;;
 		-V|--version)
 		version; exit 0;;
 		-h|--help)

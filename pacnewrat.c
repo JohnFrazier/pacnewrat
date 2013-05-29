@@ -22,12 +22,6 @@
 	#define PACMAN_DBPATH "/var/lib/pacman"
 #endif
 
-typedef enum __operation_t {
-	OP_LIST = 1,
-	OP_PULL = (1 << 1),
-	OP_PUSH = (1 << 2)
-} operation_t;
-
 enum {
 	CONF_PACNEW  = 1,
 	CONF_PACSAVE = (1 << 1),
@@ -67,8 +61,7 @@ static void version(void);
 
 /* runtime configuration */
 static struct {
-	operation_t opmask;
-
+	char lineEnd;
 	alpm_list_t *targets;
 } cfg;
 
@@ -117,15 +110,15 @@ void alpm_find_backups(alpm_pkg_t *pkg) /* {{{ */
 
 		if (pacfiles & CONF_PACNEW){
 			fprintf(stdout, "%s.pacnew", path);
-			putchar(0);
+			putchar(cfg.lineEnd);
 		}	
 		if (pacfiles & CONF_PACSAVE){
 			fprintf(stdout, "%s.pacsave", path);
-			putchar(0);
+			putchar(cfg.lineEnd);
 		}	
 		if (pacfiles & CONF_PACORIG){
 			fprintf(stdout, "%s.pacorig", path);
-			putchar(0);
+			putchar(cfg.lineEnd);
 		}	
 
 	}
@@ -153,6 +146,7 @@ int parse_options(int argc, char *argv[]) /* {{{ */
 		/* options */
 		{"help",    no_argument,       0, 'h'},
 		{"version", no_argument,       0, 'V'},
+		{"print0",  no_argument,       0, 'p'},
 		{0, 0, 0, 0}
 	};
 
@@ -164,6 +158,9 @@ int parse_options(int argc, char *argv[]) /* {{{ */
 			case 'V':
 				version();
 				return 2;
+			case 'p':
+				cfg.lineEnd = 0x0;
+				return 0;
 			default:
 				return 1;
 		}
@@ -185,6 +182,7 @@ void usage(void) /* {{{ */
 	fprintf(stderr, "pacnewrat %s\n"
 			"Usage: pacnewrat \n\n", PACNEWRAT_VERSION);
 	fprintf(stderr, " General options:\n"
+			"  -p, --print0            separate found files with null instead of newline\n"
 			"  -h, --help              display this help and exit\n"
 			"  -V, --version           display version\n\n");
 } /* }}} */
@@ -218,6 +216,8 @@ int main(int argc, char *argv[])
 
 	setlocale(LC_ALL, "");
 
+	cfg.lineEnd = 0x0a;
+	
 	if ((ret = parse_options(argc, argv)) != 0)
 		return ret;
 

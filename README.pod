@@ -1,19 +1,21 @@
 =head1 NAME
 
 
-pacnewrat - pacnew locator using libalpm
+pacnewrat - pacnew locator using libalpm for pacdiff use
 
 =head1 SYNOPSIS
 
-Usage: I<pacnewrat>
+Usage: I<pacdiff2>
 
 =head1 DESCRIPTION
 
-pacnewrat is a simple tool to find configuration files known to libalpm. 
+pacnewrat is a simple tool to find configuration files currently known to libalpm. 
 
 =head1 OPERATIONS
 
 =head1 AUTHOR
+
+John Frazier <E<lt>eyeswide@gmail.comE<gt>
 
 Daniel Wallace E<lt>gtmanfred@gmail.comE<gt>
 

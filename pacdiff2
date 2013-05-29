@@ -24,6 +24,7 @@ declare -r myver='4.1.1'
 diffprog=${DIFFPROG:-vimdiff}
 diffsearchpath=${DIFFSEARCHPATH:-/etc}
 locate=0
+pacnewrat=1
 USE_COLOR='y'
 
 plain() {
@@ -85,8 +86,9 @@ readonly ALL_OFF BOLD BLUE GREEN RED YELLOW
 
 usage() {
 	echo "$myname : a simple pacnew/pacorig/pacsave updater"
-	echo "Usage : $myname [-l]"
+	echo "Usage : $myname [-lr]"
 	echo "  -l/--locate makes $myname use locate rather than find"
+	echo "  -r/--pacnewrat makes $myname use pacnewrat rather than find"
 	echo "  DIFFPROG variable allows to override the default vimdiff"
 	echo "  DIFFSEARCHPATH allows to override the default /etc path"
 	echo "Example : DIFFPROG=meld DIFFSEARCHPATH=\"/boot /etc /usr\" $myname"
@@ -99,8 +101,10 @@ version() {
 }
 
 cmd() {
-	if [ $locate -eq 1 ]; then
-		locate -0 -e -b \*.pacnew \*.pacorig \*.pacsave
+	#if [ $locate -eq 1 ]; then
+	#	locate -0 -e -b \*.pacnew \*.pacorig \*.pacsave
+	if [ $pacnewrat -eq 1 ]; then
+		pacnewrat
 	else
 		find $diffsearchpath \( -name \*.pacnew -o -name \*.pacorig -o -name \*.pacsave \) -print0
 	fi
@@ -110,6 +114,8 @@ if [ $# -gt 0 ]; then
 	case $1 in
 		-l|--locate)
 		locate=1;;
+		-r|--pacnewrat)
+		pacnewrat=1;;
 		-V|--version)
 		version; exit 0;;
 		-h|--help)

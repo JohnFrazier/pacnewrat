@@ -22,36 +22,6 @@
 	#define PACMAN_DBPATH "/var/lib/pacman"
 #endif
 
-#define NC          "\033[0m"
-#define BOLD        "\033[1m"
-
-#define BLACK       "\033[0;30m"
-#define RED         "\033[0;31m"
-#define GREEN       "\033[0;32m"
-#define YELLOW      "\033[0;33m"
-#define BLUE        "\033[0;34m"
-#define MAGENTA     "\033[0;35m"
-#define CYAN        "\033[0;36m"
-#define WHITE       "\033[0;37m"
-#define BOLDBLACK   "\033[1;30m"
-#define BOLDRED     "\033[1;31m"
-#define BOLDGREEN   "\033[1;32m"
-#define BOLDYELLOW  "\033[1;33m"
-#define BOLDBLUE    "\033[1;34m"
-#define BOLDMAGENTA "\033[1;35m"
-#define BOLDCYAN    "\033[1;36m"
-#define BOLDWHITE   "\033[1;37m"
-/* }}} */
-
-typedef enum __loglevel_t {
-	LOG_INFO    = 1,
-	LOG_ERROR   = (1 << 1),
-	LOG_WARN    = (1 << 2),
-	LOG_DEBUG   = (1 << 3),
-	LOG_VERBOSE = (1 << 4),
-	LOG_BRIEF   = (1 << 5)
-} loglevel_t;
-
 typedef enum __operation_t {
 	OP_LIST = 1,
 	OP_PULL = (1 << 1),
@@ -129,7 +99,7 @@ void alpm_find_backups(alpm_pkg_t *pkg) /* {{{ */
 	const alpm_list_t *i;
 	char path[PATH_MAX];
 
-	const char *pkgname = alpm_pkg_get_name(pkg);
+	//const char *pkgname = alpm_pkg_get_name(pkg);
 
 	for (i = alpm_pkg_get_backup(pkg); i; i = i->next) {
 		const alpm_backup_t *backup = i->data;
@@ -145,12 +115,18 @@ void alpm_find_backups(alpm_pkg_t *pkg) /* {{{ */
 		/* check if there is a pacnew/pacsave/pacorig file */
 		int pacfiles = check_pacfiles(path);
 
-		if (pacfiles & CONF_PACNEW)
-			fprintf(stdout, "%s.pacnew\n", path);
-		if (pacfiles & CONF_PACSAVE)
-			fprintf(stdout, "%s.pacsave\n", path);
-		if (pacfiles & CONF_PACORIG)
-			fprintf(stdout, "%s.pacorig\n", path);
+		if (pacfiles & CONF_PACNEW){
+			fprintf(stdout, "%s.pacnew", path);
+			putchar(0);
+		}	
+		if (pacfiles & CONF_PACSAVE){
+			fprintf(stdout, "%s.pacsave", path);
+			putchar(0);
+		}	
+		if (pacfiles & CONF_PACORIG){
+			fprintf(stdout, "%s.pacorig", path);
+			putchar(0);
+		}	
 
 	}
 
@@ -223,7 +199,7 @@ void version(void) /* {{{ */
 		   "             ',|  \\    |__.'\n"
 		   "             '~  '~----''\n"
 		   "\n"
-		   "             Pacnewrat is...new!\n\n");
+		   "             Pacnewrat is...stealing your configs!\n\n");
 } /* }}} */
 
 void free_backup(void *ptr) { /* {{{ */
